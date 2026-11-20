@@ -2,6 +2,18 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BISMIL DIGITAL ELECTRONICS - 4 Bit Door Lock</title>
 <style>
 :root{--bg:#071426;--p:#102944;--line:#294966;--t:#e8f2ff;--muted:#91a9c4;--cyan:#35d5ff;--green:#37e59b;--red:#ff6378}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#173b61,#071426 60%);color:var(--t);font:15px system-ui,Arial}header{padding:20px 4%;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}.brand{font-weight:900;letter-spacing:2px}.brand span,.eyebrow{color:var(--cyan)}main{max-width:1450px;margin:auto;padding:22px 3%}.hero{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}h1{font-size:clamp(25px,4vw,38px);margin:5px 0}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800}.panel{background:linear-gradient(145deg,#102944,#0b1c30);border:1px solid var(--line);border-radius:15px;padding:16px;margin:14px 0}.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.bits{display:flex;gap:7px}.bit{background:#09182a;border:1px solid #294866;border-radius:9px;padding:7px;text-align:center}.bit small{display:block;color:var(--muted)}.bit button{width:35px;height:35px;background:#162d47;border:1px solid #3c5a78;color:#aabdd0;border-radius:7px;font-weight:900}.bit button.on{background:#0c624d;border-color:var(--green);color:white}.action{background:#163756;border:1px solid #315777;color:white;border-radius:8px;padding:9px 12px;margin:8px 5px 0 0;font-weight:700}.primary{background:#087e79;border-color:#24d8c1}.pill{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:4px 9px;margin:5px 4px 0 0;color:var(--muted);font-size:12px}.status{padding:12px 18px;background:#0b1c30;border:1px solid var(--line);border-radius:12px}.status strong{display:block;font-size:18px}.explain{color:var(--muted);font-size:13px;line-height:1.6}.schematic{overflow:auto}.schematic svg{width:100%;min-width:850px;background:#08182a;border:1px solid #203c59;border-radius:10px}.stage{fill:var(--cyan);font-size:14px;font-weight:bold;letter-spacing:1px}.note{fill:var(--muted);font-size:11px}.wire{fill:none;stroke:#526a82;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.wire.hi{stroke:var(--green);stroke-width:3.5;filter:drop-shadow(0 0 4px #37e59b88)}.gate{fill:#122d49;stroke:#8db4d5;stroke-width:2}.bubble{fill:#08182a;stroke:#8db4d5;stroke-width:2}.gt{fill:white;font-size:12px;font-weight:bold;text-anchor:middle}.lbl{fill:#c9d9e8;font-size:11px}.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}.grid2 .panel{margin:0}table{width:100%;border-collapse:collapse;font-size:12px}td,th{padding:7px;border-bottom:1px solid #24415d;text-align:center}th{color:var(--cyan)}footer{text-align:center;color:#68839f;padding:20px;font-size:11px}@media(max-width:850px){.controls,.grid2{grid-template-columns:1fr}} 
+
+.gate-monitor{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.gate-card{background:#091a2d;border:1px solid #294966;border-radius:12px;padding:12px;min-width:0}
+.gate-card h4{margin:0 0 9px;color:var(--cyan);font-size:14px}
+.gate-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:7px 0;border-top:1px solid #203c59;font-size:12px}
+.gate-state{display:inline-block;min-width:28px;text-align:center;border-radius:6px;padding:4px 7px;font-weight:900;background:#26394d;color:#d6e5f5}
+.gate-state.high{background:#075c48;color:#7dffca;box-shadow:0 0 10px #37e59b33}
+.gate-state.low{background:#26394d;color:#b6c7d8}
+.gate-formula{color:var(--muted);font-size:11px;line-height:1.5;margin-top:8px}
+.gate-total{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.gate-total .pill{color:var(--t)}
+@media(max-width:700px){.gate-monitor{grid-template-columns:1fr}}
 </style></head><body>
 <header><div><div class="brand">BISMIL <span>DIGITAL ELECTRONICS</span></div><small style="color:#91a9c4">LEARN · BUILD · UNDERSTAND</small></div><div class="eyebrow">OPEN GATE-LEVEL CIRCUIT · NO IC PACKAGES</div></header>
 <main><div class="hero"><div><div class="eyebrow">INTERACTIVE ELECTRONICS LAB</div><h1>4-Bit Password Door Lock</h1><div class="explain">Individual logic gates, visible feedback wires and live HIGH / LOW signals.</div></div><div class="status"><small>DOOR STATUS</small><strong id="door">🔒 LOCKED</strong><small id="reason">Password does not match</small></div></div>
@@ -20,6 +32,14 @@
 <path d="M20 730H1180" stroke="#294966" stroke-dasharray="5 7"/>
 <text x="22" y="760" class="stage">STAGE 4 · NPN TRANSISTOR + 5V RELAY + 12V SOLENOID</text><g id="driveG"></g>
 </svg><div class="pill">Logic: +5V</div><div class="pill">Relay coil: 5V</div><div class="pill">Solenoid supply: 12V</div><div class="pill">Common logic / driver ground</div></section>
+
+<section class="panel">
+<div class="eyebrow">COMPLETE INTERNAL LOGIC VIEW</div>
+<h3>Live gate-by-gate monitor · all 15 logic gates</h3>
+<p class="explain">Every gate below shows its actual input values and calculated output. Change a stored bit or DIP switch and watch the values update. Green = HIGH (1), grey = LOW (0).</p>
+<div class="gate-total"><span class="pill">8 NOR memory gates</span><span class="pill">4 XNOR comparison gates</span><span class="pill">3 AND decision gates</span><span class="pill">Total: 15 logic gates</span></div>
+<div id="gateMonitor" class="gate-monitor" aria-live="polite"></div>
+</section>
 <div class="grid2"><section class="panel"><h3>HOW IT WORKS</h3><p class="explain"><b>1. NOR memory:</b> Each pair of cross-coupled NOR gates stores one bit. SET=1 stores Q=1; RESET=1 stores Q=0. SET=RESET=1 is forbidden.</p><p class="explain"><b>2. XNOR comparison:</b> Four separate XNOR gates compare stored Q with the DIP switches.</p><p class="explain"><b>3. AND decision:</b> Three two-input AND gates combine all four equality outputs.</p><p class="explain"><b>4. Driver:</b> AND HIGH drives the NPN base through a resistor. The transistor energizes the 5V relay coil. A flyback diode is connected across the coil. Relay NO contacts switch the separate 12V solenoid supply.</p><p class="pill">UNLOCK = XNOR₁ · XNOR₂ · XNOR₃ · XNOR₄</p><p class="explain">Educational logic model; check real component ratings and hardware wiring before construction.</p></section>
 <section class="panel"><h3>XNOR TRUTH TABLE</h3><table><tr><th>A</th><th>B</th><th>XNOR</th><th>Meaning</th></tr><tr><td>0</td><td>0</td><td>1</td><td>Equal</td></tr><tr><td>0</td><td>1</td><td>0</td><td>Different</td></tr><tr><td>1</td><td>0</td><td>0</td><td>Different</td></tr><tr><td>1</td><td>1</td><td>1</td><td>Equal</td></tr></table><h3>NOR SR LATCH TABLE</h3><table><tr><th>SET</th><th>RESET</th><th>Q(next)</th><th>Action</th></tr><tr><td>0</td><td>0</td><td>Hold</td><td>Memory</td></tr><tr><td>1</td><td>0</td><td>1</td><td>Set</td></tr><tr><td>0</td><td>1</td><td>0</td><td>Reset</td></tr><tr><td>1</td><td>1</td><td>Invalid</td><td>Forbidden</td></tr></table></section></div>
 <section class="panel"><h3>GUIDED PRACTICE</h3><b id="missionTitle">Mission 1: Store a password</b><p class="explain" id="missionText">Default stored password is 1011. Enter 1011 on the DIP switches and test it.</p><button class="action primary" id="missionNext">Next mission</button><button class="action" id="missionCheck">Check mission</button><div class="pill" id="missionResult">Mission progress: 0 / 3</div></section>
@@ -50,6 +70,40 @@ for(var i=0;i<4;i++){var y=qys[i],q=memory[i],qb=1-q,g1=nor(m,175,y-10,'Q'+(3-i)
 for(var j=0;j<4;j++){var yy=420+j*29,g=xnor(c,515,yy,'MATCH'+(3-j));wire(c,'M 375 '+(yy-8)+' H '+g.a[0],!!memory[j]);wire(c,'M 430 '+(yy+8)+' H '+g.b[0],!!input[j]);label(c,378,yy-12,'MEM '+memory[j],'lbl');label(c,432,yy+22,'DIP '+input[j],'lbl');wire(c,'M '+g.out[0]+' '+g.out[1]+' H 690',!!eq[j]);label(c,697,yy+4,''+eq[j],'lbl')}
 var g1=and(a,785,635,'PAIR 1'),g2=and(a,785,690,'PAIR 2'),g3=and(a,1015,662,'FINAL');wire(a,'M 690 412 V 627 H 776',!!(eq[0]&&eq[1]));wire(a,'M 690 441 V 643 H 776',!!(eq[0]&&eq[1]));wire(a,'M 690 470 V 682 H 776',!!(eq[2]&&eq[3]));wire(a,'M 690 499 V 698 H 776',!!(eq[2]&&eq[3]));wire(a,'M '+g1.out[0]+' '+g1.out[1]+' H 965 V 654 H '+g3.a[0],!!(eq[0]&&eq[1]));wire(a,'M '+g2.out[0]+' '+g2.out[1]+' H 985 V 670 H '+g3.b[0],!!(eq[2]&&eq[3]));wire(a,'M '+g3.out[0]+' '+g3.out[1]+' H 1150',all);label(a,1145,648,'UNLOCK='+Number(all),'lbl','end');
 label(d,25,812,'AND OUT','lbl');wire(d,'M 95 808 H 180',all);svg('rect',{x:180,y:798,width:52,height:20,rx:3,class:'gate'},d);label(d,206,812,'Rb','gt','middle');wire(d,'M 232 808 H 320',all);label(d,325,812,'NPN BASE','lbl');svg('circle',{cx:405,cy:808,r:27,class:'gate'},d);wire(d,'M 405 781 V 770 H 490',all);label(d,495,774,'+5V','lbl');wire(d,'M 405 835 V 858 H 490',false);label(d,495,862,'GND / EMITTER','lbl');wire(d,'M 432 808 H 555',all);svg('rect',{x:555,y:785,width:125,height:46,rx:5,class:'gate'},d);label(d,617,813,'5V RELAY COIL','gt','middle');wire(d,'M 680 808 H 760',all);label(d,765,812,'RELAY NO CONTACT','lbl');wire(d,'M 760 808 V 792 H 865',all);label(d,870,796,'+12V → SOLENOID → 0V','lbl');label(d,610,776,'Flyback diode across coil','note','middle');label(d,25,895,'Collector → relay coil · diode cathode → +5V · relay COM → +12V · NO → solenoid + · solenoid − → 12V return','note')}
-function update(){var eq=memory.map(function(v,i){return Number(v===input[i])}),all=eq.every(function(v){return v===1});$('xout').textContent='XNOR: '+eq.join('');$('aout').textContent='AND: '+Number(all);$('door').textContent=all?'🔓 UNLOCKED':'🔒 LOCKED';$('door').style.color=all?'var(--green)':'var(--t)';$('reason').textContent=all?'All four bits match · relay energized':'Password does not match';draw(eq,all)}
+
+function stateBadge(v){return '<span class="gate-state '+(v?'high':'low')+'">'+v+'</span>'}
+function gateCard(title,rows,formula){return '<article class="gate-card"><h4>'+title+'</h4>'+rows.map(function(r){return '<div class="gate-row"><span>'+r[0]+'</span>'+stateBadge(r[1])+'</div>'}).join('')+'<div class="gate-formula">'+formula+'</div></article>'}
+function renderGateMonitor(eq){
+ var out='',pair1=eq[0]&eq[1],pair2=eq[2]&eq[3],final=pair1&pair2;
+ for(var i=0;i<4;i++){
+  var bit=3-i,q=memory[i],qb=1-q,s=0,r=0;
+  var qOut=Number(!(r||qb)),qbOut=Number(!(s||q));
+  out+=gateCard('BIT '+bit+' · NOR SR LATCH',[
+   ['NOR gate Q · RESET '+r+', Q̅ '+qb,qOut],
+   ['NOR gate Q̅ · SET '+s+', Q '+q,qbOut],
+   ['Stored output Q',q],
+   ['Complement Q̅',qb]
+  ],'Q = NOT(RESET OR Q̅). Q̅ = NOT(SET OR Q). In hold mode SET=RESET=0; feedback retains the stored bit.');
+ }
+ for(var j=0;j<4;j++){
+  out+=gateCard('BIT '+(3-j)+' · XNOR COMPARATOR',[
+   ['Input A · stored Q',memory[j]],
+   ['Input B · entered DIP',input[j]],
+   ['XNOR output · match',eq[j]]
+  ],'XNOR = (A AND B) OR (NOT A AND NOT B). Output is 1 only when both bits are equal.');
+ }
+ out+=gateCard('AND GATE 1 · FIRST PAIR',[
+  ['Input XNOR bit 3',eq[0]],['Input XNOR bit 2',eq[1]],['Output M12',pair1]
+ ],'M12 = XNOR(bit 3) AND XNOR(bit 2).');
+ out+=gateCard('AND GATE 2 · SECOND PAIR',[
+  ['Input XNOR bit 1',eq[2]],['Input XNOR bit 0',eq[3]],['Output M34',pair2]
+ ],'M34 = XNOR(bit 1) AND XNOR(bit 0).');
+ out+=gateCard('AND GATE 3 · FINAL DECISION',[
+  ['Input M12',pair1],['Input M34',pair2],['UNLOCK output',final]
+ ],'UNLOCK = M12 AND M34. All four XNOR outputs must be HIGH.');
+ $('gateMonitor').innerHTML=out;
+}
+
+function update(){var eq=memory.map(function(v,i){return Number(v===input[i])}),all=eq.every(function(v){return v===1});$('xout').textContent='XNOR: '+eq.join('');$('aout').textContent='AND: '+Number(all);$('door').textContent=all?'🔓 UNLOCKED':'🔒 LOCKED';$('door').style.color=all?'var(--green)':'var(--t)';$('reason').textContent=all?'All four bits match · relay energized':'Password does not match';draw(eq,all);renderGateMonitor(eq)}
 controls();update();missionUI();
 </script></body></html>
